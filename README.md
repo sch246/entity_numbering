@@ -20,7 +20,7 @@ Entity Numbering Mod 是一个 Fabric mod，为 Minecraft 中的实体按种类�
 
 ## 安装
 
-1. 确保你已经安装了 Fabric loader
+1. 确保你已经安装了 fabric-api 和 Fabric loader，且loader版本>=0.16.0
 2. 下载本 mod 的 .jar 文件
 3. 将下载的 .jar 文件放入你的 Minecraft `mods` 文件夹中
 4. 启动游戏！
