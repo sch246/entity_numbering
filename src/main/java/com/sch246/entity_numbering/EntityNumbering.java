@@ -51,5 +51,6 @@ public class EntityNumbering implements ModInitializer {
 		int count = EntityCounter.getNextCount(livingEntity.getType());
 		Text currentName = livingEntity.getName();
 		livingEntity.setCustomName(Text.literal(currentName.getString() + EntityNumbering.CONFIG.nameSeparator + count));
+        livingEntity.addCommandTag("entity_numbering.named");
     }
 }
