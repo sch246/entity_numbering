@@ -60,7 +60,7 @@ For debugging purposes, you can open `/saves/<world_name>/data/entity_counter.js
 
 ## Compatibility
 
-This mod is compatible with Minecraft version 1.21.
+This mod is compatible with Minecraft version 1.21-1.21.1.
 
 Other versions have not been tested.
 
