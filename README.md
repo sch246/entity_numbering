@@ -15,6 +15,8 @@ Entity Numbering Mod 是一个 Fabric mod，为 Minecraft 中的实体按种类�
 - 自定义死亡消息广播范围
 - 自定义实体名称和编号之间的分隔符
 - 为僵尸感染村民作了特别处理
+- 命名过的实体会带有Tag:`entity_numbering.named`，也可以以此来防止实体被命名
+- 添加了`resetname`命令以清除名字
 
 ## 已知问题
 
@@ -48,6 +50,14 @@ mod 的配置文件应该位于 `.minecraft/config/entity_numbering.json`。你�
 - `nameSeparator`: 实体名称和编号之间的分隔符
 
 作为调试，你可以打开`/saves/<存档名>/data/entity_counter.json`修改每种生物的当前编号计数
+
+## 卸载
+
+- 修改`.minecraft/config/entity_numbering.json`将`enableNumbering`设为`false`
+- 运行`/resetname @e[tag=entity_numbering.named]`，你需要确保所有命名过的实体都被执行到了(可能有实体在未加载区块内)
+- 运行`/execute as @e[tag=entity_numbering.named] unless data entity @s CustomName run tag @s remove entity_numbering.named`以移除没有名字的实体的tag
+- 关闭游戏
+- 删除 `mods` 文件夹中的 `entity_numbering-x.x.x.jar` 文件
 
 ## 兼容性
 

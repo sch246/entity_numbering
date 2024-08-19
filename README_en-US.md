@@ -13,6 +13,9 @@ Entity Numbering Mod is a Fabric mod that adds cumulative numbering to entities 
 - Customizable death message broadcast range
 - Customizable separator between entity name and number
 - Special handling for zombies infecting villagers
+- Named entities will have the tag: `entity_numbering.named`, which can also be used to prevent entities from being named
+- Added the `resetname` command to clear names
+
 
 ## Known Issues
 
@@ -46,6 +49,14 @@ The mod's configuration file should be located at `.minecraft/config/entity_numb
 - `nameSeparator`: The separator between entity name and number
 
 For debugging purposes, you can open `/saves/<world_name>/data/entity_counter.json` to modify the current number count for each type of entity
+
+## Uninstallation
+
+- Modify `.minecraft/config/entity_numbering.json` and set `enableNumbering` to `false`
+- Run `/resetname @e[tag=entity_numbering.named]`, make sure all named entities are affected (some entities might be in unloaded chunks)
+- Run `/execute as @e[tag=entity_numbering.named] unless data entity @s CustomName run tag @s remove entity_numbering.named` to remove the tag from entities without a custom name
+- Close the game
+- Delete the `entity_numbering-x.x.x.jar` file from the `mods` folder
 
 ## Compatibility
 

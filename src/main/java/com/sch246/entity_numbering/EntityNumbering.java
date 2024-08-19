@@ -1,6 +1,7 @@
 package com.sch246.entity_numbering;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.entity.Entity;
@@ -32,6 +33,11 @@ public class EntityNumbering implements ModInitializer {
 
 
         ServerEntityEvents.ENTITY_LOAD.register(this::onEntityLoad);
+
+        // 注册命令
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            ResetNameCommand.register(dispatcher);
+        });
 	}
 
     private void onEntityLoad(Entity entity, ServerWorld world) {
@@ -45,6 +51,7 @@ public class EntityNumbering implements ModInitializer {
         if (entity instanceof PlayerEntity) return;
         if (entity.getWorld().isClient) return;
 		if (entity.hasCustomName()) return;
+        if (entity.getCommandTags().contains("entity_numbering.named")) return;
 
         LivingEntity livingEntity = (LivingEntity) entity;
 

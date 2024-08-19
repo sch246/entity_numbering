@@ -1,3 +1,5 @@
 {
+    "command.entity_numbering.resetname.success": "Reset names of %d entities",
+    "command.entity_numbering.resetname.failure": "No entity names were reset",
     "entity_numbering.zombie_infects_villager": "%1$s was infected by %2$s"
 }

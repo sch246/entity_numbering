@@ -1,3 +1,5 @@
 {
+    "command.entity_numbering.resetname.success": "已重置 %d 个实体的名称",
+    "command.entity_numbering.resetname.failure": "没有实体的名称被重置",
     "entity_numbering.zombie_infects_villager": "%1$s被%2$s感染了"
 }
