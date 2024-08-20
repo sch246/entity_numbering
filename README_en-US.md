@@ -9,11 +9,11 @@ Entity Numbering Mod is a Fabric mod that adds cumulative numbering to entities 
 ## Features
 
 - Adds unique numbering to entities in the game (can be disabled)
+  - Named entities will have the tag: `entity_numbering.named`, which can also be used to prevent entities from being named
 - Broadcasts entity death messages (can be disabled)
 - Customizable death message broadcast range
 - Customizable separator between entity name and number
-- Special handling for zombies infecting villagers
-- Named entities will have the tag: `entity_numbering.named`, which can also be used to prevent entities from being named
+- Special handling for zombies infecting villagers and creeper explosions
 - Added the `resetname` command to clear names
 
 

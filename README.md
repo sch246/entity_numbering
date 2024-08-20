@@ -11,11 +11,12 @@ Entity Numbering Mod 是一个 Fabric mod，为 Minecraft 中的实体按种类�
 ## 功能
 
 - 为游戏中的实体添加唯一编号(可关闭)
+  - 命名过的实体会带有Tag:`entity_numbering.named`，也可以以此来防止实体被命名
 - 广播实体死亡消息(可关闭)
 - 自定义死亡消息广播范围
 - 自定义实体名称和编号之间的分隔符
-- 为僵尸感染村民作了特别处理
-- 命名过的实体会带有Tag:`entity_numbering.named`，也可以以此来防止实体被命名
+- 为僵尸感染村民和苦力怕爆炸作了特别处理
+
 - 添加了`resetname`命令以清除名字
 
 ## 已知问题
