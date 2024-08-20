@@ -6,6 +6,8 @@ Repository: [https://github.com/sch246/entity_numbering](https://github.com/sch2
 
 Entity Numbering Mod is a Fabric mod that adds cumulative numbering to entities in Minecraft by species and provides death message broadcasting functionality.
 
+![](https://s2.loli.net/2024/08/20/MO5S7Nraqgt9xBA.png)
+
 ## Features
 
 - Adds unique numbering to entities in the game (can be disabled)

@@ -8,6 +8,8 @@ language: [English](./README_en-US.md)
 
 Entity Numbering Mod 是一个 Fabric mod，为 Minecraft 中的实体按种类累加编号，并提供死亡消息广播功能。
 
+![](https://s2.loli.net/2024/08/20/Pd8JVKiQ7FEuenD.png)
+
 ## 功能
 
 - 为游戏中的实体添加唯一编号(可关闭)
