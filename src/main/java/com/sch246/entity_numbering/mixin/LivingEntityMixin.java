@@ -3,7 +3,6 @@ package com.sch246.entity_numbering.mixin;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTracker;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -24,40 +23,6 @@ public abstract class LivingEntityMixin {
     // 添加一个新的属性
     @Unique
     public Text deathMessage;
-
-	// 广播死亡信息
-	@Unique
-	public void broadcastDeathMessage(Text deathMessage) {
-		// 如果为null，则不广播
-		if (deathMessage == null) {
-			return;
-		}
-
-		int distance = EntityNumbering.CONFIG.boardcastDistance;
-		LivingEntity entity = (LivingEntity) (Object) this;
-
-		// 向半径内的玩家广播死亡信息
-		if (distance >0){
-			double squaredDistance = distance * distance;
-			for (PlayerEntity player : entity.getWorld().getPlayers()) {
-				if (player.squaredDistanceTo(entity) <= squaredDistance) {
-					player.sendMessage(deathMessage, false);
-				}
-			}
-		} else if (distance == 0) {
-			for (PlayerEntity player : entity.getWorld().getPlayers()) {
-				player.sendMessage(deathMessage, false);
-			}
-		}
-	}
-
-
-
-
-
-
-
-
 
 	private boolean shouldSkipDeathMessage(LivingEntity entity) {
 		return !EntityNumbering.CONFIG.enableDeathMessages  // 死亡信息关闭
@@ -86,6 +51,6 @@ public abstract class LivingEntityMixin {
 	@Inject(at = @At("TAIL"), method = "onDeath")
     private void onDeath2(DamageSource source, CallbackInfo ci) {
 		// 广播死亡信息，由于broadcastDeathMessage内有null检查，所以可以不用再检查
-		broadcastDeathMessage(this.deathMessage);
+		EntityNumbering.broadcastDeathMessage(this.deathMessage, (LivingEntity) (Object) this);
 	}
 }

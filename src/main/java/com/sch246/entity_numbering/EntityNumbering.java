@@ -12,6 +12,7 @@ import net.minecraft.text.Text;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spongepowered.asm.mixin.Unique;
 
 public class EntityNumbering implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -62,4 +63,29 @@ public class EntityNumbering implements ModInitializer {
 		livingEntity.setCustomName(Text.literal(currentName.getString() + CONFIG.nameSeparator + count));
         livingEntity.addCommandTag("entity_numbering.named");
     }
+
+	// 广播死亡信息
+	@Unique
+	public static void broadcastDeathMessage(Text deathMessage, Entity entity) {
+		// 如果为null，则不广播
+		if (deathMessage == null) {
+			return;
+		}
+
+		int distance = EntityNumbering.CONFIG.boardcastDistance;
+
+		// 向半径内的玩家广播死亡信息
+		if (distance >0){
+			double squaredDistance = distance * distance;
+			for (PlayerEntity player : entity.getWorld().getPlayers()) {
+				if (player.squaredDistanceTo(entity) <= squaredDistance) {
+					player.sendMessage(deathMessage, false);
+				}
+			}
+		} else if (distance == 0) {
+			for (PlayerEntity player : entity.getWorld().getPlayers()) {
+				player.sendMessage(deathMessage, false);
+			}
+		}
+	}
 }

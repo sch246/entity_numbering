@@ -12,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import com.sch246.entity_numbering.EntityNumbering;
+
 
 @Mixin(ZombieEntity.class)
 public class ZombieEntityMixin {
@@ -28,7 +30,7 @@ public class ZombieEntityMixin {
             Text deathMessage = Text.translatable("entity_numbering.zombie_infects_villager", other.getDisplayName(), ((ZombieEntity) (Object) this).getDisplayName())
             .formatted(Formatting.DARK_RED);
 
-            villager.broadcastDeathMessage(deathMessage);
+            EntityNumbering.broadcastDeathMessage(deathMessage, other);
 
             // 重置死亡消息
             villager.deathMessage = null;
