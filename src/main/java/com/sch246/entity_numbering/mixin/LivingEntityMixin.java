@@ -3,6 +3,7 @@ package com.sch246.entity_numbering.mixin;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTracker;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -24,16 +25,6 @@ public abstract class LivingEntityMixin {
     @Unique
     public Text deathMessage;
 
-
-
-	// 通过nbt判断是否有Owner
-	@Unique
-	public boolean hasOwner() {
-		return ((LivingEntity) (Object) this)
-				.writeNbt(new NbtCompound())
-				.contains("Owner");
-	}
-
 	// 广播死亡信息
 	@Unique
 	public void broadcastDeathMessage(Text deathMessage) {
@@ -43,16 +34,20 @@ public abstract class LivingEntityMixin {
 		}
 
 		int distance = EntityNumbering.CONFIG.boardcastDistance;
-
 		LivingEntity entity = (LivingEntity) (Object) this;
+
 		// 向半径内的玩家广播死亡信息
 		if (distance >0){
-			entity.getWorld().getPlayers().stream()
-					.filter(player -> player.squaredDistanceTo(entity) <= distance * distance)
-					.forEach(player -> player.sendMessage(deathMessage, false));
+			double squaredDistance = distance * distance;
+			for (PlayerEntity player : entity.getWorld().getPlayers()) {
+				if (player.squaredDistanceTo(entity) <= squaredDistance) {
+					player.sendMessage(deathMessage, false);
+				}
+			}
 		} else if (distance == 0) {
-			entity.getWorld().getPlayers().stream()
-					.forEach(player -> player.sendMessage(deathMessage, false));
+			for (PlayerEntity player : entity.getWorld().getPlayers()) {
+				player.sendMessage(deathMessage, false);
+			}
 		}
 	}
 
@@ -64,30 +59,19 @@ public abstract class LivingEntityMixin {
 
 
 
+	private boolean shouldSkipDeathMessage(LivingEntity entity) {
+		return !EntityNumbering.CONFIG.enableDeathMessages  // 死亡信息关闭
+			|| entity.getWorld().isClient			// 客户端
+			|| (EntityNumbering.CONFIG.boardcastNeedName && !entity.hasCustomName()) // 需要名字且没有名字
+			|| entity instanceof ServerPlayerEntity 	// 是玩家
+			|| entity.writeNbt(new NbtCompound()).contains("Owner");// 有Owner
+	}
 
 
-	@SuppressWarnings("resource")
 	@Inject(at = @At("HEAD"), method = "onDeath")
     private void onDeath(DamageSource source, CallbackInfo ci) {
-		// 如果计数未开启
-		if (!EntityNumbering.CONFIG.enableDeathMessages) {
-			return;
-		}
-
 		LivingEntity entity = (LivingEntity) (Object) this;
-
-		// 如果客户端未开启
-		if (entity.getWorld().isClient) {
-			return;
-		}
-
-		// 如果没开启设置且正好没有名字
-		if (EntityNumbering.CONFIG.boardcastNeedName && !entity.hasCustomName()){
-			return;
-		}
-
-		// 如果是玩家或有主人
-		if (entity instanceof ServerPlayerEntity || hasOwner()) {
+		if (shouldSkipDeathMessage(entity)) {
 			return;
 		}
 

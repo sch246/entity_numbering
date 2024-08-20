@@ -46,18 +46,20 @@ public class EntityNumbering implements ModInitializer {
 
     @SuppressWarnings("resource")
 	private void processEntity(Entity entity) {
-        if (!EntityNumbering.CONFIG.enableNumbering) return;
-        if (!(entity instanceof LivingEntity)) return;
-        if (entity instanceof PlayerEntity) return;
-        if (entity.getWorld().isClient) return;
-		if (entity.hasCustomName()) return;
-        if (entity.getCommandTags().contains("entity_numbering.named")) return;
+        if (!CONFIG.enableNumbering
+        || !(entity instanceof LivingEntity)
+        || entity instanceof PlayerEntity
+        || entity.getWorld().isClient
+		|| entity.hasCustomName()
+        || entity.getCommandTags().contains("entity_numbering.named")) {
+            return;
+        }
 
         LivingEntity livingEntity = (LivingEntity) entity;
 
 		int count = EntityCounter.getNextCount(livingEntity.getType());
 		Text currentName = livingEntity.getName();
-		livingEntity.setCustomName(Text.literal(currentName.getString() + EntityNumbering.CONFIG.nameSeparator + count));
+		livingEntity.setCustomName(Text.literal(currentName.getString() + CONFIG.nameSeparator + count));
         livingEntity.addCommandTag("entity_numbering.named");
     }
 }
