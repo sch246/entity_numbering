@@ -11,7 +11,7 @@
 		"homepage": "https://sch246.com/",
 		"sources": "https://github.com/sch246/entity_numbering"
 	},
-	"license": "GPL-3.0",
+	"license": "MIT",
 	"icon": "assets/entity_numbering/icon.png",
 	"environment": "*",
 	"entrypoints": {
