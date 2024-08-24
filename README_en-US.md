@@ -25,7 +25,7 @@ Entity Numbering Mod is a Fabric mod that adds cumulative numbering to entities 
 
 ## Installation
 
-1. Make sure you have fabric-api and Fabric loader installed, with loader version >=0.16.0
+1. Make sure you have Fabric loader(>=0.16.0) and fabric-api installed
 2. Download the .jar file of this mod
 3. Place the downloaded .jar file into your Minecraft `mods` folder
 4. Launch the game!
